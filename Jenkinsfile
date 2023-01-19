@@ -6,8 +6,7 @@ dockerImage = ''
 }
 agent any
 stages {
-node {
-            stage('SCM') {
+stage('SCM') {
                 checkout scm
             }
             stage('SonarQube Analysis') {
@@ -16,7 +15,6 @@ node {
                     sh "${scannerHome}/bin/sonar-scanner"
                 }
             }
-}
 stage('Building our image') {
 steps{
 script {
