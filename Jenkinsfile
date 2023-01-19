@@ -7,14 +7,17 @@ dockerImage = ''
 agent any
 stages {
 stage('SCM') {
-                checkout scm
-            }
-            stage('SonarQube Analysis') {
-                def scannerHome = tool 'SonarqubeScanner'
-                withSonarQubeEnv() {
-                    sh "${scannerHome}/bin/sonar-scanner"
-                }
-            }
+    steps {
+        checkout scm
+    }
+}
+stage('SonarQube Analysis') {
+    steps {
+        withSonarQubeEnv('SonarQube') {
+            sh 'sonar-scanner'
+        }
+    }
+}
 stage('Building our image') {
 steps{
 script {
