@@ -1,11 +1,27 @@
 pipeline {
-    agent any
-stages {
-stage ('run collection') {
-steps {
-sh 'docker run -t postman/newman run -h'
-sh 'docker run -v run collection-1.json --color off --disable-unicode'
+    agent {
+label 'docker' 
+  }
+    stages {
+stage('Docker node test') {
+agent {
+docker {
+            image 'node:lts-bullseye-slim'
+            args '-p 3000:3000'
+        }
 }
-}
-}
+            steps{
+                sh 'apt-get update && apt-get install -y npm'
+                sh 'npm install'
+            }
+        }
+
+
+        stage('Run Newman tests') {
+            steps {
+                sh 'npm install -g newman'
+                sh 'newman run mycollection.json -e myenvironment.json'
+            }
+        }
+    }
 }

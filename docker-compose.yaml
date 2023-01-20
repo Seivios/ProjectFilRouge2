@@ -2,6 +2,15 @@ version: '2'
 
 services:
 
+  dind:
+    image: docker:dind
+    container_name: dind
+    privileged: true
+    expose:
+    - 2375
+    environment:
+    - DOCKER_TLS_CERTDIR=
+
   jenkins:
     image: jenkins/jenkins:lts
     volumes:
