@@ -16,5 +16,8 @@
   "bugs": {
     "url": "https://github.com/Seivios/ProjectFilRouge2/issues"
   },
-  "homepage": "https://github.com/Seivios/ProjectFilRouge2#readme"
+  "homepage": "https://github.com/Seivios/ProjectFilRouge2#readme",
+  "dependencies": {
+    "newman": "^5.3.2"
+  }
 }
