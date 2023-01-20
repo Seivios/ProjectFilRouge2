@@ -7,9 +7,9 @@ services:
     container_name: dind
     privileged: true
     expose:
-    - 2375
+      - 2375
     environment:
-    - DOCKER_TLS_CERTDIR=
+      - DOCKER_TLS_CERTDIR=
 
   jenkins:
     image: jenkins/jenkins:lts
