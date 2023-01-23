@@ -1,23 +1,19 @@
----
-version: "2"
+version: '3'
+
+
 services:
-  dind:
-    image: docker:dind
-    container_name: dind
-    privileged: true
-    expose:
-      - 2375
-    environment:
-      - DOCKER_TLS_CERTDIR=
   jenkins:
-    image: jenkins/jenkins:lts
+    image: custom-jenkins-docker:latest
+    ports:
+      - "8080:8080"
+      - "50000:50000"
     volumes:
-      - jenkins_data:/var/jenkins_home
+      - "/var/run/docker.sock:/var/run/docker.sock"
+      - "jenkins_home:/var/jenkins_home"
     networks:
       - sonarnet
-    ports:
-      - 8080:8080
-      - 50000:50000
+
+
   sonarqube:
     image: sonarqube
     volumes:
@@ -25,7 +21,8 @@ services:
     networks:
       - sonarnet
     ports:
-      - 9000:9000
+      - '9000:9000'
+
   db:
     image: postgres
     networks:
@@ -36,11 +33,14 @@ services:
     volumes:
       - postgresql:/var/lib/postgresql
       - postgresql_data:/var/lib/postgresql/data
+
 networks:
   sonarnet:
     driver: bridge
+
 volumes:
-  sonarqube_extensions: null
-  postgresql: null
-  postgresql_data: null
-  jenkins_data: null
+  sonarqube_extensions:
+  postgresql:
+  postgresql_data:
+  jenkins_data:
+  jenkins_home:
